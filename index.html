@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pulso Urbano — Eventos de la Ciudad</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">Pulso<span>.</span>Urbano</a>
+    <nav>
+      <a href="#calendario">Calendario</a>
+      <a href="#crear">Crear evento</a>
+      <a href="#">Sobre nosotros</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <div class="city-tag">📍 Santiago, Chile</div>
+    <h1>Lo que <em>late</em> en la ciudad</h1>
+    <p class="hero-desc">
+      Descubre conciertos, exposiciones, mercados y más. Todo lo que hace vibrar a la ciudad,
+      en un solo lugar. Explora el calendario o comparte tu propio evento con la comunidad.
+    </p>
+    <div class="hero-stats">
+      <div>
+        <span class="stat-num" id="total-events">12</span>
+        <span class="stat-label">Eventos este mes</span>
+      </div>
+      <div>
+        <span class="stat-num">5</span>
+        <span class="stat-label">Categorías</span>
+      </div>
+      <div>
+        <span class="stat-num">3</span>
+        <span class="stat-label">Comunas</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-badge-ring"></div>
+    <div class="hero-badge">
+      <div class="hero-badge-inner" id="hero-day"></div>
+      <div class="hero-badge-label">días con eventos</div>
+    </div>
+  </div>
+</section>
+
+<main>
+
+  <!-- CALENDARIO -->
+  <section class="calendar-section" id="calendario">
+    <div class="section-header">
+      <h2 class="section-title">Calendario</h2>
+      <span class="section-tag">— Selecciona un día para ver los eventos</span>
+    </div>
+
+    <div class="calendar-layout">
+      <div class="calendar-wrapper">
+        <div class="cal-nav">
+          <button class="cal-btn" id="prev-month">&#8592;</button>
+          <div class="cal-month" id="cal-month-label"></div>
+          <button class="cal-btn" id="next-month">&#8594;</button>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-weekdays">
+            <div class="cal-weekday">Lu</div>
+            <div class="cal-weekday">Ma</div>
+            <div class="cal-weekday">Mi</div>
+            <div class="cal-weekday">Ju</div>
+            <div class="cal-weekday">Vi</div>
+            <div class="cal-weekday">Sa</div>
+            <div class="cal-weekday">Do</div>
+          </div>
+          <div class="cal-days" id="cal-days"></div>
+        </div>
+      </div>
+
+      <div class="day-panel">
+        <div class="day-panel-header">
+          <div class="day-panel-date" id="panel-date">Selecciona un día</div>
+          <div class="day-panel-subtitle" id="panel-subtitle">Haz clic en cualquier día del calendario</div>
+        </div>
+        <div class="day-panel-body" id="panel-body">
+          <div class="no-events">
+            <div class="no-events-icon">📅</div>
+            <p>Selecciona un día para<br>ver los eventos programados</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FORMULARIO -->
+  <section class="form-section" id="crear">
+    <div class="section-header">
+      <h2 class="section-title">Publicar evento</h2>
+      <span class="section-tag">— Comparte tu evento con la comunidad</span>
+    </div>
+
+    <div class="form-wrapper">
+      <div class="form-intro">
+        <div class="form-intro-text">
+          <h3>¿Tienes algo que compartir?</h3>
+          <p>
+            Cualquier persona puede publicar un evento en Pulso Urbano. Ya sea una
+            feria de barrio, una exposición independiente, un concierto o un taller —
+            si sucede en la ciudad, tiene un lugar aquí.
+          </p>
+        </div>
+        <div class="form-steps">
+          <div class="form-step">
+            <div class="step-num">1</div>
+            <div class="step-text">Completa los datos del evento: nombre, lugar y horario</div>
+          </div>
+          <div class="form-step">
+            <div class="step-num">2</div>
+            <div class="step-text">Elige una categoría para que la gente pueda encontrarlo</div>
+          </div>
+          <div class="form-step">
+            <div class="step-num">3</div>
+            <div class="step-text">Publica y aparecerá en el calendario al instante</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-grid" id="event-form">
+        <div class="form-group full">
+          <label for="ev-name">Nombre del evento</label>
+          <input type="text" id="ev-name" placeholder="Ej: Festival de Jazz de Otoño">
+        </div>
+        <div class="form-group full">
+          <label for="ev-desc">Descripción</label>
+          <textarea id="ev-desc" placeholder="Cuéntale a la gente de qué se trata el evento..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="ev-date">Fecha</label>
+          <input type="date" id="ev-date">
+        </div>
+        <div class="form-group">
+          <label>Horario</label>
+          <div class="time-row">
+            <input type="time" id="ev-start">
+            <div class="time-sep">hasta</div>
+            <input type="time" id="ev-end">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="ev-place">Lugar / Recinto</label>
+          <input type="text" id="ev-place" placeholder="Ej: Club de Jazz, Barrio Italia">
+        </div>
+        <div class="form-group">
+          <label for="ev-organizer">Organizador</label>
+          <input type="text" id="ev-organizer" placeholder="Tu nombre o institución">
+        </div>
+        <div class="form-group full">
+          <label>Categoría</label>
+          <div class="category-options">
+            <div>
+              <input type="radio" name="category" id="cat-music" value="Música" class="cat-option" checked>
+              <label for="cat-music" class="cat-label"><span class="cat-dot" style="background:#c84b2f"></span>Música</label>
+            </div>
+            <div>
+              <input type="radio" name="category" id="cat-art" value="Arte" class="cat-option">
+              <label for="cat-art" class="cat-label"><span class="cat-dot" style="background:#b8892a"></span>Arte y Cultura</label>
+            </div>
+            <div>
+              <input type="radio" name="category" id="cat-market" value="Feria" class="cat-option">
+              <label for="cat-market" class="cat-label"><span class="cat-dot" style="background:#2d6a4f"></span>Feria / Mercado</label>
+            </div>
+            <div>
+              <input type="radio" name="category" id="cat-sport" value="Deporte" class="cat-option">
+              <label for="cat-sport" class="cat-label"><span class="cat-dot" style="background:#c84b2f"></span>Deporte</label>
+            </div>
+            <div>
+              <input type="radio" name="category" id="cat-food" value="Gastronomía" class="cat-option">
+              <label for="cat-food" class="cat-label"><span class="cat-dot" style="background:#b8892a"></span>Gastronomía</label>
+            </div>
+            <div>
+              <input type="radio" name="category" id="cat-other" value="Otro" class="cat-option">
+              <label for="cat-other" class="cat-label"><span class="cat-dot" style="background:#6b5d4a"></span>Otro</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-actions full">
+          <button class="btn-primary" onclick="submitEvent()">Publicar evento</button>
+          <button class="btn-secondary" onclick="clearForm()">Limpiar</button>
+          <p class="form-note">Al publicar, el evento aparecerá en el<br>calendario de la comunidad inmediatamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-brand">Pulso<span>.</span>Urbano</div>
+  <p>Conectando a la comunidad con lo que late en la ciudad · Santiago, Chile</p>
+</footer>
+
+<div class="toast" id="toast">
+  <div class="toast-title" id="toast-title"></div>
+  <div class="toast-body" id="toast-body"></div>
+</div>
+
+<script>
+  const today = new Date();
+  let viewYear = today.getFullYear();
+  let viewMonth = today.getMonth();
+  let selectedDay = null;
+
+  const MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  const DAYS_ES = ['lunes','martes','miércoles','jueves','viernes','sábado','domingo'];
+
+  const y = today.getFullYear();
+  const m = today.getMonth() + 1;
+  const pad = n => String(n).padStart(2,'0');
+  const dateStr = (d) => `${y}-${pad(m)}-${pad(d)}`;
+
+  let events = [
+    { date: dateStr(3),  name: 'Feria de Artesanía del Barrio', start: '10:00', end: '18:00', place: 'Plaza Ñuñoa', category: 'Feria', organizer: 'Municipalidad de Ñuñoa' },
+    { date: dateStr(3),  name: 'Taller de Acuarela', start: '15:00', end: '17:30', place: 'Centro Cultural Matucana', category: 'Arte', organizer: 'Escuela de Artes Visuales' },
+    { date: dateStr(7),  name: 'Jazz en el Jardín', start: '19:00', end: '22:00', place: 'Jardín Botánico, Las Condes', category: 'Música', organizer: 'Club de Jazz Santiago' },
+    { date: dateStr(10), name: 'Mercado Orgánico', start: '09:00', end: '14:00', place: 'Parque Bustamante', category: 'Gastronomía', organizer: 'Red Orgánica Santiago' },
+    { date: dateStr(12), name: 'Exposición: Miradas del Sur', start: '11:00', end: '20:00', place: 'Galería Moro, Barrio Lastarria', category: 'Arte', organizer: 'Galería Moro' },
+    { date: dateStr(14), name: 'Maratón Nocturna 5K', start: '20:00', end: '23:00', place: "Parque O'Higgins", category: 'Deporte', organizer: 'Club Atlético Santiago' },
+    { date: dateStr(14), name: 'Cine al Aire Libre', start: '21:00', end: '23:30', place: 'Plaza de Armas', category: 'Arte', organizer: 'CineCiudad' },
+    { date: dateStr(18), name: 'Festival Gastronómico Latinoamericano', start: '12:00', end: '22:00', place: 'Barrio Italia', category: 'Gastronomía', organizer: 'Asociación de Chefs Chile' },
+    { date: dateStr(21), name: 'Concierto Sinfónico Gratuito', start: '18:00', end: '21:00', place: 'Parque Forestal', category: 'Música', organizer: 'Orquesta Filarmónica' },
+    { date: dateStr(24), name: 'Feria del Libro Independiente', start: '10:00', end: '19:00', place: 'Parque de las Esculturas', category: 'Arte', organizer: 'Editoriales Independientes' },
+    { date: dateStr(26), name: 'Tarde de Swing', start: '17:00', end: '21:00', place: 'Club Social Barrio Brasil', category: 'Música', organizer: 'Swing Santiago' },
+    { date: dateStr(28), name: 'Yoga en el Parque', start: '08:00', end: '09:30', place: 'Cerro San Cristóbal', category: 'Deporte', organizer: 'YogaUrbano' },
+  ];
+
+  function getEventsForDate(ds) {
+    return events.filter(e => e.date === ds);
+  }
+
+  function categoryClass(cat) {
+    if (cat === 'Arte' || cat === 'Feria') return 'gold-cat';
+    if (cat === 'Gastronomía') return 'green-cat';
+    return '';
+  }
+
+  function categoryDotClass(cat) {
+    if (cat === 'Arte' || cat === 'Feria') return 'gold';
+    if (cat === 'Gastronomía') return 'green';
+    return '';
+  }
+
+  function badgeClass(cat) {
+    if (cat === 'Arte' || cat === 'Feria') return 'gold';
+    if (cat === 'Gastronomía') return 'green';
+    return '';
+  }
+
+  function renderCalendar() {
+    document.getElementById('cal-month-label').textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+
+    const container = document.getElementById('cal-days');
+    container.innerHTML = '';
+
+    const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+    const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+    const startOffset = (firstDay === 0 ? 7 : firstDay) - 1;
+
+    for (let i = 0; i < startOffset; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'cal-day empty';
+      container.appendChild(blank);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = `${viewYear}-${pad(viewMonth + 1)}-${pad(d)}`;
+      const dayEvents = getEventsForDate(ds);
+      const isToday = d === today.getDate() && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+      const isSelected = selectedDay === ds;
+
+      const cell = document.createElement('div');
+      cell.className = 'cal-day'
+        + (isToday ? ' today' : '')
+        + (dayEvents.length ? ' has-events' : '')
+        + (isSelected ? ' selected' : '');
+      cell.innerHTML = `<span class="cal-day-num">${d}</span>`;
+
+      if (dayEvents.length) {
+        const dots = document.createElement('div');
+        dots.className = 'event-dots';
+        dayEvents.slice(0, 3).forEach(ev => {
+          const dot = document.createElement('span');
+          dot.className = 'dot ' + categoryDotClass(ev.category);
+          dots.appendChild(dot);
+        });
+        cell.appendChild(dots);
+      }
+
+      cell.addEventListener('click', () => selectDay(ds, d));
+      container.appendChild(cell);
+    }
+
+    const daysWithEvents = new Set(
+      events.filter(e => {
+        const [ey, em] = e.date.split('-');
+        return parseInt(ey) === viewYear && parseInt(em) - 1 === viewMonth;
+      }).map(e => e.date)
+    ).size;
+
+    document.getElementById('hero-day').textContent = daysWithEvents;
+    document.getElementById('total-events').textContent = events.filter(e => {
+      const [ey, em] = e.date.split('-');
+      return parseInt(ey) === viewYear && parseInt(em) - 1 === viewMonth;
+    }).length;
+  }
+
+  function selectDay(ds, d) {
+    selectedDay = ds;
+    renderCalendar();
+
+    const [year, month] = ds.split('-').map(Number);
+    const date = new Date(year, month - 1, d);
+    const dayName = DAYS_ES[date.getDay() === 0 ? 6 : date.getDay() - 1];
+
+    document.getElementById('panel-date').textContent =
+      `${dayName.charAt(0).toUpperCase() + dayName.slice(1)}, ${d} de ${MONTHS[month - 1]}`;
+
+    const dayEvents = getEventsForDate(ds);
+    document.getElementById('panel-subtitle').textContent = dayEvents.length
+      ? `${dayEvents.length} evento${dayEvents.length > 1 ? 's' : ''} programado${dayEvents.length > 1 ? 's' : ''}`
+      : 'Sin eventos este día';
+
+    const body = document.getElementById('panel-body');
+    if (!dayEvents.length) {
+      body.innerHTML = `<div class="no-events"><div class="no-events-icon">🌿</div><p>No hay eventos programados<br>para este día.</p></div>`;
+      return;
+    }
+
+    body.innerHTML = dayEvents.map(ev => `
+      <div class="event-card ${categoryClass(ev.category)}">
+        <div class="event-time">⏱ ${ev.start} — ${ev.end}</div>
+        <div class="event-name">${ev.name}</div>
+        <div class="event-place">📍 ${ev.place}</div>
+        <span class="event-cat-badge ${badgeClass(ev.category)}">${ev.category}</span>
+      </div>
+    `).join('');
+  }
+
+  document.getElementById('prev-month').addEventListener('click', () => {
+    viewMonth--;
+    if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+    selectedDay = null;
+    renderCalendar();
+    resetPanel();
+  });
+
+  document.getElementById('next-month').addEventListener('click', () => {
+    viewMonth++;
+    if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+    selectedDay = null;
+    renderCalendar();
+    resetPanel();
+  });
+
+  function resetPanel() {
+    document.getElementById('panel-date').textContent = 'Selecciona un día';
+    document.getElementById('panel-subtitle').textContent = 'Haz clic en cualquier día del calendario';
+    document.getElementById('panel-body').innerHTML = `<div class="no-events"><div class="no-events-icon">📅</div><p>Selecciona un día para<br>ver los eventos programados</p></div>`;
+  }
+
+  function submitEvent() {
+    const name      = document.getElementById('ev-name').value.trim();
+    const date      = document.getElementById('ev-date').value;
+    const start     = document.getElementById('ev-start').value;
+    const end       = document.getElementById('ev-end').value;
+    const place     = document.getElementById('ev-place').value.trim();
+    const organizer = document.getElementById('ev-organizer').value.trim();
+    const cat       = document.querySelector('input[name="category"]:checked')?.value || 'Otro';
+
+    if (!name || !date || !start || !end || !place) {
+      showToast('Campos incompletos', 'Por favor completa al menos el nombre, fecha, horario y lugar del evento.', true);
+      return;
+    }
+    if (start >= end) {
+      showToast('Horario inválido', 'La hora de inicio debe ser anterior a la hora de término.', true);
+      return;
+    }
+
+    events.push({ date, name, start, end, place, category: cat, organizer: organizer || 'Anónimo' });
+    events.sort((a, b) => a.date.localeCompare(b.date) || a.start.localeCompare(b.start));
+
+    const [ey, em] = date.split('-').map(Number);
+    viewYear = ey;
+    viewMonth = em - 1;
+    renderCalendar();
+
+    clearForm();
+    showToast('¡Evento publicado!', `"${name}" ya aparece en el calendario.`, false);
+    document.getElementById('calendario').scrollIntoView({ behavior: 'smooth' });
+
+    setTimeout(() => selectDay(date, parseInt(date.split('-')[2])), 600);
+  }
+
+  function clearForm() {
+    document.getElementById('ev-name').value = '';
+    document.getElementById('ev-desc').value = '';
+    document.getElementById('ev-date').value = '';
+    document.getElementById('ev-start').value = '';
+    document.getElementById('ev-end').value = '';
+    document.getElementById('ev-place').value = '';
+    document.getElementById('ev-organizer').value = '';
+    document.getElementById('cat-music').checked = true;
+  }
+
+  function showToast(title, body, isError) {
+    const t = document.getElementById('toast');
+    document.getElementById('toast-title').textContent = title;
+    document.getElementById('toast-body').textContent = body;
+    t.style.background = isError ? '#8B2020' : '#1a1209';
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 4000);
+  }
+
+  // ── INICIO ──
+  renderCalendar();
+
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth() + 1)}-${pad(today.getDate())}`;
+  document.getElementById('ev-date').value = todayStr;
+  document.getElementById('ev-start').value = '10:00';
+  document.getElementById('ev-end').value = '12:00';
+
+  if (getEventsForDate(todayStr).length > 0) {
+    setTimeout(() => selectDay(todayStr, today.getDate()), 100);
+  }
+</script>
+
+</body>
+</html>
